@@ -1,6 +1,6 @@
 # 📘 Overview
 
-This repository provides a production-ready OpenLDAP environment designed for authentication and directory services within the Punctiq ecosystem.  
+This repository provides a production-ready OpenLDAP environment designed for authentication and directory services within the Itcommunity ecosystem.  
 It includes a custom Docker image based on Ubuntu 22.04, preconfigured with:
 
 - OpenLDAP and ldap-utils
