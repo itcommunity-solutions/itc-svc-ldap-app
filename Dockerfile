@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 LABEL maintainer="support@punctiq.com" \
       org.opencontainers.image.title="Itcommunity OpenLDAP" \
-      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.version="1.0.1" \
       org.opencontainers.image.description="OpenLDAP installation, simple boilerplate ready to use LDAP implementation." \
       org.opencontainers.image.source="https://punctiq.com" \
       org.opencontainers.image.licenses="MIT" \

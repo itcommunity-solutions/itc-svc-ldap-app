@@ -2,10 +2,10 @@ services:
   ldap:
     build: .
     container_name: itc-prod-hz-ldap1
-    image: itcommunity/openldap-identity-prod:1.0.0
+    image: itcommunity/openldap-identity-prod:1.0.1
     environment:
       LDAP_DOMAIN: ${LDAP_DOMAIN}
-      LDAP_ORGANISATION: ${LDAP_ORGANISATION}
+      LDAP_ORGANISATION: ${LDAP_ORGANIZATION}
     ports:
       - "1389:389"
       - "1636:636"
