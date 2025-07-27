@@ -1,0 +1,126 @@
+# 📘 Overview
+
+This repository provides a production-ready OpenLDAP environment designed for authentication and directory services within the Punctiq ecosystem.  
+It includes a custom Docker image based on Ubuntu 22.04, preconfigured with:
+
+- OpenLDAP and ldap-utils
+- Secure bind configuration and bootstrap entrypoint
+- Persistent data and configuration volumes
+- Runtime secrets injection via Docker volumes
+- Optional environment variable overrides
+
+The setup is intended for internal identity services and application integration (e.g., DevOps, monitoring, access control).
+
+---
+
+# 📦 Project Structure
+
+```
+.
+├── Dockerfile                # Ubuntu base image with OpenLDAP and utils
+├── docker-compose.yml       # Deployment with persistent named volumes
+├── bootstrap/entrypoint.sh  # Bootstrap/init script for LDAP server
+├── secrets/                 # Secure location for password injection
+├── .env                     # LDAP configuration (domain, organization, password)
+├── Makefile                 # Automation for build, run, and cleanup
+└── README.md                # You're here
+```
+
+---
+
+# 🚀 Usage
+
+## 🔧 Build the Docker image
+
+```bash
+make build VERSION=1.0.0
+```
+
+or manually:
+
+```bash
+docker build -t itcommunity/openldap-identity-prod:1.0.0 .
+```
+
+## ▶️ Run with Docker Compose
+
+```bash
+make up VERSION=1.0.0
+```
+
+or directly:
+
+```bash
+docker compose up -d
+```
+
+## 🔄 Restart
+
+```bash
+make restart
+```
+
+## 🧼 Cleanup
+
+```bash
+make down
+make clean
+```
+
+---
+
+# 🛠 Configuration
+
+| File / Path                                | Description                                      |
+|--------------------------------------------|--------------------------------------------------|
+| `bootstrap/entrypoint.sh`                  | Entry point script used for initial setup        |
+| `secrets/ldap_admin_password`              | Mounted secret file with LDAP admin password     |
+| `/var/lib/ldap` (via `ldap_data`)          | LDAP database directory (persistent)             |
+| `/etc/ldap/slapd.d` (via `ldap_config`)    | LDAP configuration directory (persistent)        |
+| `.env`                                     | LDAP domain and organization variables           |
+
+### Environment Variables (via `.env`)
+
+```ini
+LDAP_DOMAIN=itcommunity.ro
+LDAP_ORGANISATION=ITcommunity SRL
+LDAP_ADMIN_PASSWORD=superpassword
+```
+
+---
+
+# 🔖 Tagging & Versioning
+
+We follow semantic versioning:
+
+- `itcommunity/openldap-identity-prod:1.0.0` — stable version
+- `itcommunity/openldap-identity-prod:prod` — alias for production
+- `itcommunity/openldap-identity-prod:sha-<git-sha>` — Git-based immutable builds
+
+Use `make tag` and `make push` to automate tagging and deployment:
+
+```bash
+make tag
+make push
+```
+
+---
+
+# 🔐 Security Notes
+
+- Secrets should be injected only through mounted files in `secrets/`
+- Ensure `.env` and `secrets/` are excluded via `.gitignore`
+- Do not expose ports `389` and `636` externally unless protected by a reverse proxy or firewall
+
+---
+
+# 👥 Contributors
+
+**Owner:** [Itcommunity DevOps Team]  
+**Maintainers:** [@alexandru-raul], [@infra-directory], [@ldap-admins]
+
+---
+
+# 📄 License
+
+[MIT License](https://opensource.org/licenses/MIT)
